@@ -528,6 +528,12 @@ export const ProviderList: Readonly<ProviderInfo[]> = [
     message: "Make sure to use a unique and credible user agent.",
   },
   {
+    key: "subhd",
+    name: "SubHD",
+    description:
+      "Chinese subtitles for movies and series, including Chinese-English bilingual subtitles.",
+  },
+  {
     key: "subsource",
     name: "subsource.net",
     message:
