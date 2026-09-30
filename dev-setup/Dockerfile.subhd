@@ -1,0 +1,27 @@
+FROM --platform=$BUILDPLATFORM node:24-alpine AS frontend
+
+WORKDIR /src/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN HUSKY=0 npm ci --no-audit --no-fund
+COPY frontend/ ./
+RUN npm run build
+
+FROM lscr.io/linuxserver/bazarr:v1.6.0-ls362@sha256:a20fb11a440d704a9d61c283aa26462aad33dc63223b173f8d8c77d33e8e9d59
+
+ARG VCS_REF=local
+LABEL org.opencontainers.image.source="https://github.com/pierredeman/bazarr" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      org.opencontainers.image.description="Bazarr with the movie-only SubHD2 provider for testing."
+
+RUN rm -rf /app/bazarr/bin
+COPY bazarr.py requirements.txt LICENSE /app/bazarr/bin/
+COPY bazarr/ /app/bazarr/bin/bazarr/
+COPY libs/ /app/bazarr/bin/libs/
+COPY custom_libs/ /app/bazarr/bin/custom_libs/
+COPY migrations/ /app/bazarr/bin/migrations/
+COPY --from=frontend /src/frontend/build/ /app/bazarr/bin/frontend/build/
+RUN printf '1.6.0-subhd2-%s\n' "$VCS_REF" > /app/bazarr/bin/VERSION
+
+WORKDIR /app/bazarr/bin
+RUN NO_CLI=true PYTHONPATH=custom_libs:libs:bazarr python3 -c \
+    "from subliminal_patch.extensions import provider_registry; from subliminal.video import Movie; p = provider_registry['subhd2']; assert p.languages and p.video_types == (Movie,)"
