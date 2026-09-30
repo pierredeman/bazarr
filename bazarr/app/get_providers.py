@@ -119,6 +119,9 @@ def provider_throttle_map():
         "whisperai": {
             ConnectionError: (datetime.timedelta(minutes=5), "5 minutes"),
         },
+        "subhd2": {
+            requests.exceptions.ReadTimeout: (datetime.timedelta(minutes=1), "1 minute"),
+        },
         "regielive": {
             APIThrottled: (datetime.timedelta(hours=1), "1 hour"),
             TooManyRequests: (datetime.timedelta(minutes=5), "5 minutes"),
