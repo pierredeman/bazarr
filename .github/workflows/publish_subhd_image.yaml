@@ -3,7 +3,7 @@ name: Publish SubHD test image
 on:
   workflow_dispatch:
   push:
-    branches: [feature/subhd-provider]
+    branches: [codex/subhd-image]
     paths:
       - bazarr/**
       - custom_libs/**
