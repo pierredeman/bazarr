@@ -87,7 +87,7 @@ At the request of some users, here is a way to show appreciation for the efforts
 - Sous-Titres.eu
 - SubDL
 - subf2m.co
-- SubHD (Chinese and English subtitles)
+- SubHD (Chinese subtitles for movies)
 - Subs.sab.bz
 - Subs4Free
 - Subs4Series
