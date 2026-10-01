@@ -530,12 +530,6 @@ export const ProviderList: Readonly<ProviderInfo[]> = [
   {
     key: "subhd",
     name: "SubHD",
-    description:
-      "Chinese subtitles for movies and series, including Chinese-English bilingual subtitles.",
-  },
-  {
-    key: "subhd2",
-    name: "SubHD2",
     description: "Chinese subtitles for movies, including bilingual subtitles.",
   },
   {
